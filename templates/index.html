@@ -1,0 +1,309 @@
+<!-- index.html - Main page with login/register forms -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Taker App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Login/Register Page Styles */
+        .container {
+          max-width: 1140px;
+          margin: 2rem auto;
+          padding: 0 20px;
+        }
+        
+        h1 {
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .lead {
+          color: #666;
+          font-weight: 300;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        
+        /* Auth container styling */
+        .auth-container {
+          max-width: 480px;
+          margin: 2rem auto;
+          background-color: #fff;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+          overflow: hidden;
+        }
+        
+        /* Tabs styling */
+        .auth-tabs {
+          border-bottom: 1px solid #eaeaea;
+          display: flex;
+        }
+        
+        .auth-tabs .nav-item {
+          flex: 1;
+        }
+        
+        .auth-tabs .nav-link {
+          color: #555;
+          font-weight: 500;
+          padding: 1rem;
+          border: none;
+          border-radius: 0;
+          text-align: center;
+          width: 100%;
+          transition: all 0.2s ease;
+        }
+        
+        .auth-tabs .nav-link.active {
+          color: #333;
+          border-bottom: 2px solid #333;
+          background-color: transparent;
+        }
+        
+        .auth-tabs .nav-link:hover:not(.active) {
+          background-color: #fafafa;
+          color: #444;
+        }
+        
+        /* Form container */
+        .form-container {
+          padding: 2rem;
+        }
+        
+        /* Form elements */
+        .form-label {
+          color: #555;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+        }
+        
+        .form-control {
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          padding: 0.75rem;
+          font-size: 1rem;
+          transition: border-color 0.2s ease;
+        }
+        
+        .form-control:focus {
+          border-color: #aaa;
+          box-shadow: 0 0 0 0.1rem rgba(150, 150, 150, 0.25);
+        }
+        
+        /* Button styling */
+        .btn-primary {
+          background-color: #444;
+          border-color: #444;
+          padding: 0.75rem;
+          font-weight: 500;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover, 
+        .btn-primary:active, 
+        .btn-primary:focus {
+          background-color: #333;
+          border-color: #333;
+        }
+        
+        /* Alert styling */
+        .alert {
+          border-radius: 4px;
+          padding: 0.75rem 1rem;
+          margin-bottom: 1rem;
+          font-size: 0.9rem;
+        }
+        
+        /* Success and error alerts */
+        .alert-success {
+          background-color: #f2f9f2;
+          border-color: #e0f0e0;
+          color: #3c763d;
+        }
+        
+        .alert-danger {
+          background-color: #fdf6f6;
+          border-color: #f8e7e7;
+          color: #a94442;
+        }
+        
+        /* Footer */
+        .footer {
+          text-align: center;
+          padding: 1rem;
+          border-top: 1px solid #eaeaea;
+          color: #888;
+          font-size: 0.85rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+          .form-container {
+            padding: 1.5rem;
+          }
+          
+          .auth-container {
+            margin: 1rem auto;
+            box-shadow: none;
+            border: 1px solid #eaeaea;
+          }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mb-4">
+                <h1>Knowledge Graph</h1>
+                <p class="lead">Organize your thoughts and find connections between your Knowledge</p>
+            </div>
+        </div>
+
+        <div class="auth-container">
+            <ul class="nav nav-tabs auth-tabs" id="authTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Login</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Register</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="authTabsContent">
+                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    <div class="form-container">
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="loginUsername" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="loginUsername" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" required>
+                            </div>
+                            <div id="loginMessage" class="alert" style="display: none;"></div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                    <div class="form-container">
+                        <form id="registerForm">
+                            <div class="mb-3">
+                                <label for="registerUsername" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="registerUsername" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="registerEmail" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="registerPassword" required>
+                            </div>
+                            <div id="registerMessage" class="alert" style="display: none;"></div>
+                            <button type="submit" class="btn btn-primary w-100">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                &copy; 2025 Knowledge Graph - Connect your thoughts
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const messageElement = document.getElementById('loginMessage');
+            
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageElement.className = 'alert alert-success';
+                    messageElement.textContent = 'Login successful. Redirecting...';
+                    messageElement.style.display = 'block';
+                    
+                    // Store token in localStorage
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user_id', data.user_id);
+                    localStorage.setItem('username', data.username);
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1000);
+                } else {
+                    messageElement.className = 'alert alert-danger';
+                    messageElement.textContent = data.error || 'Login failed';
+                    messageElement.style.display = 'block';
+                }
+            } catch (error) {
+                messageElement.className = 'alert alert-danger';
+                messageElement.textContent = 'An error occurred. Please try again.';
+                messageElement.style.display = 'block';
+            }
+        });
+        
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const messageElement = document.getElementById('registerMessage');
+            
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageElement.className = 'alert alert-success';
+                    messageElement.textContent = 'Registration successful. Please login.';
+                    messageElement.style.display = 'block';
+                    
+                    // Reset form
+                    document.getElementById('registerForm').reset();
+                    
+                    // Switch to login tab after successful registration
+                    setTimeout(() => {
+                        document.getElementById('login-tab').click();
+                    }, 1500);
+                } else {
+                    messageElement.className = 'alert alert-danger';
+                    messageElement.textContent = data.error || 'Registration failed';
+                    messageElement.style.display = 'block';
+                }
+            } catch (error) {
+                messageElement.className = 'alert alert-danger';
+                messageElement.textContent = 'An error occurred. Please try again.';
+                messageElement.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
